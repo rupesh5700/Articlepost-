@@ -1,0 +1,31 @@
+<center><h1>Listing articles</h1>
+
+  Our blog has <%#= Article.public_count %> articles and counting!
+  Our blog has <%#= Comment.public_count %> comments and counting!
+ 
+<table>
+  <tr>
+    <th>User</th>
+    <th>Title</th>
+    <th>Text</th>
+    <th>Like</th>.
+    <th></th>
+  </tr>
+ 
+  <% @articles.each do |article| %>
+    <tr><td><%= article.user.email %></td>
+      <td><%= article.title %></td>
+      <td><%= article.text %></td>
+       <td><%= article.likes.count %> <%= (article.likes.count) == 1 ? 'Like' : 'Likes'%></td>
+      <td><%= link_to 'Show', article_path(article) %></td>
+      <td><% if current_user == article.user %></td>
+      <%# if current_user?(article.user) %>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Destroy', article_path(article), method: :delete, data: {confirm: 'Are you sure ?'}%></td>
+      <%end%>
+
+    </tr>
+  <% end %>
+
+<%= link_to 'New article', new_article_path, class: "btn btn-primary" %>
+</table></center>
